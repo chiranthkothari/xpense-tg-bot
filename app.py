@@ -7,7 +7,7 @@ from pydantic import BaseModel
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-client = gspread.service_account("creds.json")
+client = gspread.service_account("/etc/secrets/creds.json")
 sheet = client.open_by_url(
     "https://docs.google.com/spreadsheets/d/1virgIh_FdgZHYLpIopt41uZ-HhQQUxYdOeKnoZp_9w8/").sheet1
 
