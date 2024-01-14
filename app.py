@@ -22,10 +22,16 @@ class Record(BaseModel):
     amount: int
     category: str
 
+def process_date(date):
+    splits= date.split("/")
+    splits[0], splits[1] = splits[1], splits[0]
+    return "/".join(splits)
+
 
 @app.post("/track/")
 def save_to_gsheet(record: Record):
-    row = [record.type, record.description, record.date, record.amount, record.category]
+
+    row = [record.type, record.description, process_date(record.date), record.amount, record.category]
     index = 2  # Rows start at index 1, and we skip the header row
     sheet.append_row(row, index)  # Insert the row at the correct index
     return JSONResponse(status_code=200, content=jsonable_encoder({"message": f"Saved {record.description}"}), media_type="application/json")
